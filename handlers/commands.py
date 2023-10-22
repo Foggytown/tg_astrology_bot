@@ -2,6 +2,7 @@ from aiogram import Router, F
 from aiogram.filters import Command
 from aiogram import types
 from aiogram.filters import CommandObject
+from dateutil import parser
 
 router = Router()
 
@@ -13,12 +14,17 @@ async def cmd_start(message: types.Message):
                          + "пожалуйста введите свою дату рождения ниже в формате: \n/date 17.05.2004")
 
 
-@router.message(Command("name"))
+@router.message(Command("date"))
 async def cmd_name(message: types.Message, command: CommandObject):
-    if command.args:
-        await message.answer(f"Привет, <b>{command.args}</b>", parse_mode='html')
-    else:
-        await message.answer("Пожалуйста, укажи своё имя после команды /name!")
+    try:
+        print(message.text)
+        date=parser.parse(message.text.split()[1])
+        await message.answer(str(date.day))
+
+    except parser._parser.ParserError as error:
+        await message.answer('Вы неправильно указали дату своего рождения, укажите ее в формате\n/date 17.05.2004')
+
+
 
 
 @router.message(Command('images'))
