@@ -1,23 +1,32 @@
+# global imports
 import asyncio
 import logging
-
 from aiogram import Bot, Dispatcher
 
+import redis.asyncio as redis
+
+# local imports
 from config_reader import config
+from schedule.scheduler import init_sch
+from db import save_db, load_db, storage
 from handlers import commands, texts
 
 
 # Запуск бота
 async def main():
-    logging.basicConfig(level=logging.INFO)
     bot = Bot(token=config.bot_token.get_secret_value())
+    logging.basicConfig(level=logging.INFO)
+    scheduler = init_sch(bot)
     dp = Dispatcher()
     dp.include_routers(commands.router, texts.router)
 
-    # Запускаем бота и пропускаем все накопленные входящие
-    # Да, этот метод можно вызвать даже если у вас поллинг
-    await bot.delete_webhook(drop_pending_updates=True)
-    await dp.start_polling(bot)
+    try:
+        await load_db()
+        scheduler.start()
+        await dp.start_polling(bot, storage=storage)
+    finally:
+        await save_db()
+        await bot.session.close()
 
 
 if __name__ == "__main__":
