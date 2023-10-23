@@ -11,7 +11,7 @@ from schedule.scheduler import init_sch
 from db import save_db, load_db, storage
 from handlers import commands, texts
 
-
+#anime
 # Запуск бота
 async def main():
     bot = Bot(token=config.bot_token.get_secret_value())
