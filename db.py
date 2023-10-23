@@ -1,5 +1,6 @@
 import redis.asyncio as redis
 import json
+from config_reader import config
 import pickle
 
 users_data = []
@@ -16,7 +17,7 @@ users_data is list of subed users
 storage = redis.Redis(
     host='eu1-enjoyed-deer-40451.upstash.io',
     port=40451,
-    password='',
+    password=config.db_password.get_secret_value(),
 )
 
 
