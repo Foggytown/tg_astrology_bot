@@ -16,7 +16,7 @@ users_data is list of subed users
 storage = redis.Redis(
     host='eu1-enjoyed-deer-40451.upstash.io',
     port=40451,
-    password='2315b6d835d74b5a9f0201b0e841bbdb',
+    password='',
 )
 
 
