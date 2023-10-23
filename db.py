@@ -28,7 +28,7 @@ async def load_db():
     res = await storage.get('users_data')
     if res:
         users_data = json.loads(res)
-        print(users_data, 'load_db')
+        # print(users_data, 'load_db')
 
 
 async def get_db():
@@ -38,9 +38,9 @@ async def get_db():
 
 async def save_db():
     global storage, users_data
-    print(users_data, 'save_db')
+    # print(users_data, 'save_db')
     res = json.dumps(users_data)
-    print(bool(res), 'save_db')
+    # print(bool(res), 'save_db')
     if res:
         await storage.set('users_data', res)
     else:
