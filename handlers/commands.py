@@ -3,40 +3,48 @@ from aiogram.filters import Command
 from aiogram import types
 from aiogram.filters import CommandObject
 from dateutil import parser
-from db import get_db
+from db import storage, basic_mapping
 
 router = Router()
 
 
-# Хэндлер на команду /start
 @router.message(Command("start"))
 async def cmd_start(message: types.Message):
-    await message.answer("Здравствуйте, вас приветствует бот для ежедневных гороскопов и натальных карт,"
-                         + "пожалуйста введите свою дату рождения ниже в формате: \n/date 17.05.2004")
+    user_id = 'id:' + str(message.from_user.id)
+    if (await storage.hgetall(user_id)) == {}:
+        await storage.hset(user_id, mapping=basic_mapping)
+        await message.answer("Здравствуйте, вас приветствует бот для ежедневных гороскопов и натальных карт,"
+                             + "пожалуйста введите свою дату рождения ниже в формате: \n/date 17.05.2004")
+    else:
+        await message.answer("Мы с вами уже знакомы.")
 
 
 @router.message(Command("subscribe"))
 async def cmd_sub(message: types.Message):
-    users_data = await get_db()
-    already_subbed = message.from_user.id in users_data
-    if already_subbed:
+    user_id = 'id:' + str(message.from_user.id)
+    user_subbed = await storage.hget(user_id, 'sub')
+    if int(user_subbed):
         await message.answer("Вы уже подписаны на рассылку гороскопов.")
     else:
-        users_data.append(message.from_user.id)
-        print(users_data, 'sub')
+        await storage.hset(user_id, mapping={'sub': 1})
         await message.answer("Спасибо, вы подписались на ежедневную рассылку гороскопов.")
 
 
 @router.message(Command("unsubscribe"))
 async def cmd_unsub(message: types.Message):
-    users_data = await get_db()
-    already_subbed = message.from_user.id in users_data
-    if already_subbed:
-        users_data.remove(message.from_user.id)
-        print(users_data, 'unsub')
+    user_id = 'id:' + str(message.from_user.id)
+    user_subbed = await storage.hget(user_id, 'sub')
+    if int(user_subbed):
+        await storage.hset(user_id, mapping={'sub': 0})
         await message.answer("Вы были отписаны от рассылки.")
     else:
         await message.answer("Вы и так не подписаны на рассылку.")
+
+
+@router.message(Command("clear_data"))
+async def cmd_unsub(message: types.Message):
+    user_id = 'id:' + str(message.from_user.id)
+    await storage.delete(user_id)
 
 
 @router.message(Command("date"))

@@ -3,45 +3,19 @@ import json
 from config_reader import config
 import pickle
 
-users_data = []
 '''
-future plans
+in progress
 users_data is dict of kind
-{user_id: {is_sub: bool, sign: str, date_of_birth: datetime or smth}}
+{ 'id:'+user_id: {sub: int 1/0, sign: str, birth_date: str(datetime) format later}}
 
-now
-users_data is list of subed users
 
 '''
+
+basic_mapping = {'sub': 0, 'sign': 'unknown', 'birth_date': 'unknown'}
 
 storage = redis.Redis(
     host='eu1-enjoyed-deer-40451.upstash.io',
     port=40451,
     password=config.db_password.get_secret_value(),
+    decode_responses=True,
 )
-
-
-async def load_db():
-    global storage, users_data
-
-    users_data = []
-    res = await storage.get('users_data')
-    if res:
-        users_data = json.loads(res)
-        # print(users_data, 'load_db')
-
-
-async def get_db():
-    global users_data
-    return users_data
-
-
-async def save_db():
-    global storage, users_data
-    # print(users_data, 'save_db')
-    res = json.dumps(users_data)
-    # print(bool(res), 'save_db')
-    if res:
-        await storage.set('users_data', res)
-    else:
-        await storage.delete('users_data')
