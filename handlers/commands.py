@@ -1,8 +1,10 @@
-from aiogram import Router, F
+# global imports
+from aiogram import Router
 from aiogram.filters import Command
 from aiogram import types
-from aiogram.filters import CommandObject
 from dateutil import parser
+
+# local imports
 from db import storage, basic_mapping
 
 router = Router()
@@ -42,13 +44,15 @@ async def cmd_unsub(message: types.Message):
 
 
 @router.message(Command("clear_data"))
-async def cmd_unsub(message: types.Message):
+async def cmd_delete(message: types.Message):
     user_id = 'id:' + str(message.from_user.id)
     await storage.delete(user_id)
 
 
 @router.message(Command("date"))
-async def cmd_date(message: types.Message, command: CommandObject):
+async def cmd_date(message: types.Message):
+    user_id = 'id:' + str(message.from_user.id)
+    user_subbed = await storage.hget(user_id, 'sub')
     try:
         print(message.text)
         date = parser.parse(message.text.split()[1])

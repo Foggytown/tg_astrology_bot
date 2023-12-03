@@ -3,12 +3,11 @@ import asyncio
 import logging
 from aiogram import Bot, Dispatcher
 
-
 # local imports
 from config_reader import config
 from schedule.scheduler import init_sch
 from db import storage
-from handlers import commands, texts
+from handlers import commands, texts, start_and_edit, main_menu
 
 
 # Запуск бота
@@ -17,7 +16,7 @@ async def main():
     logging.basicConfig(level=logging.INFO)
     scheduler = init_sch(bot)
     dp = Dispatcher()
-    dp.include_routers(commands.router, texts.router)
+    dp.include_routers(main_menu.router, start_and_edit.router, commands.router, texts.router)
 
     try:
         scheduler.start()

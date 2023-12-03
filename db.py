@@ -1,8 +1,8 @@
+# global imports
 import redis.asyncio as redis
-import json
-from config_reader import config
-import pickle
 
+# local imports
+from config_reader import config
 '''
 in progress
 users_data is dict of kind

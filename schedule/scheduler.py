@@ -1,6 +1,9 @@
-from schedule.msgs_scheduled import send_message_time, send_message_time2
+# global imports
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from aiogram import Bot
+
+# local imports
+from schedule.msgs_scheduled import send_message_time, send_message_time2
 
 
 def init_sch(bot: Bot):

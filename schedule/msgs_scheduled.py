@@ -1,6 +1,9 @@
-from db import storage
+# global imports
 from aiogram.methods.send_message import SendMessage
 from aiogram import Bot
+
+# local imports
+from db import storage
 
 
 async def send_message_time(bot: Bot):
