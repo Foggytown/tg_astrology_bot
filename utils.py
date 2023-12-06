@@ -23,13 +23,22 @@ zodiac_keyboard_builder.adjust(3)
 zodiac_map = dict(zip(zodiac_list, ['Aries', 'Taurus', 'Gemini', 'Cancer', 'Leo', 'Virgo',
                                     'Libra', 'Scorpio', 'Sagittarius', 'Capricorn', 'Aquarius', 'Pisces']))
 
-main_menu_list = ['Изменить дату рождения или знак зодиака', 'Получить гороскоп на сегодня',
+main_menu_list = ['Изменить дату рождения или знак зодиака', 'Подписка на рассылку', 'Получить гороскоп на сегодня',
                   'Посмотреть совместимость с другим знаком', 'Посмотреть натальную карту']
 
 main_menu_keyboard_builder = ReplyKeyboardBuilder()
-for i in main_menu_list:
-    main_menu_keyboard_builder.add(KeyboardButton(text=i))
-main_menu_keyboard_builder.adjust(2)
+main_menu_keyboard_builder.row(
+    KeyboardButton(text=main_menu_list[0]),
+    KeyboardButton(text=main_menu_list[1])
+)
+main_menu_keyboard_builder.row(
+    KeyboardButton(text=main_menu_list[2])
+)
+
+main_menu_keyboard_builder.row(
+    KeyboardButton(text=main_menu_list[3]),
+    KeyboardButton(text=main_menu_list[4])
+)
 
 
 async def exit_to_main_menu(message: Message, state: FSMContext):
@@ -38,3 +47,5 @@ async def exit_to_main_menu(message: Message, state: FSMContext):
         text='Приветствуем вас в гланом меню',
         reply_markup=main_menu_keyboard_builder.as_markup(resize_keyboard=True)
     )
+
+subscription_list = ["Подписаться", "Отписаться", "Вернуться в главное меню"]

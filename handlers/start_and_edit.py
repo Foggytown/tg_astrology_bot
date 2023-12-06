@@ -9,23 +9,13 @@ from dateutil import parser
 # local imports
 from db import storage, basic_mapping
 from utils import make_row_keyboard, zodiac_list, zodiac_map, zodiac_keyboard_builder, exit_to_main_menu
-from handlers.filters import IsDeveloper
 from handlers.states import GreetingAndEdit
 
 router = Router()
 
 
-@router.message(IsDeveloper(), Command("clear_state"))
-async def cmd_clear(message: types.Message, state: FSMContext) -> None:
-    prevstate = await state.get_state()
-    await state.set_state(None)
-    await message.answer(
-        text=f"Стейт был {prevstate}, cбросил стейт"
-    )
-
-
-@router.message(StateFilter(None), Command("start1"))
-async def cmd_start1(message: types.Message, state: FSMContext) -> None:
+@router.message(StateFilter(None), Command("start"))
+async def cmd_start(message: types.Message, state: FSMContext) -> None:
     await message.answer(
         text="Выберите:",
         reply_markup=make_row_keyboard(['Ввести знак зодиака', 'Ввести дату'])
@@ -34,7 +24,7 @@ async def cmd_start1(message: types.Message, state: FSMContext) -> None:
 
 
 @router.message(StateFilter(None), Command("edit"))
-async def cmd_edit(message: types.Message, state: FSMContext) -> None:
+async def edit_menu(message: types.Message, state: FSMContext) -> None:
     await message.answer(
         text="Выберите что вы хотите изменить:",
         reply_markup=make_row_keyboard(['Изменить знак зодиака', 'Изменить дату рождения'])
@@ -88,7 +78,7 @@ async def date_received(message: types.Message, state: FSMContext) -> None:
                 text="Дата успешно изменена"
             )
 
-        await state.set_state(None)
+        await exit_to_main_menu(message, state)
 
     except parser._parser.ParserError as error:
         await message.answer('Вы неправильно указали дату своего рождения, укажите ее в формате:\n21.03.2021')

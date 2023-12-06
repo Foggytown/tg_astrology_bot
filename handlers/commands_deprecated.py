@@ -9,6 +9,9 @@ from db import storage, basic_mapping
 
 router = Router()
 
+# DEPRECATED
+# only for testing purposes
+
 
 @router.message(Command("start"))
 async def cmd_start(message: types.Message):

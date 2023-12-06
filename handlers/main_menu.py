@@ -7,7 +7,8 @@ from aiogram import types
 # local imports
 from utils import main_menu_keyboard_builder, main_menu_list
 from handlers.filters import IsDeveloper
-from handlers.start_and_edit import cmd_edit
+from handlers.start_and_edit import edit_menu
+from handlers.subcription import sub_menu
 from handlers.states import MainMenu
 
 router = Router()
@@ -27,7 +28,9 @@ async def exit_to_menu(message: types.Message, state: FSMContext) -> None:
                 )
 async def command_in_main_menu(message: types.Message, state: FSMContext) -> None:
     if message.text == main_menu_list[0]:
-        await cmd_edit(message, state)
+        await edit_menu(message, state)
+    elif message.text == main_menu_list[1]:
+        await sub_menu(message, state)
     else:
         await message.answer(
             text="Извините эта возможность еще не сделана"

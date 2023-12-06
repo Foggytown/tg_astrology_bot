@@ -11,3 +11,7 @@ class GreetingAndEdit(StatesGroup):
     date = State()
     sign = State()
     finish = State()
+
+
+class Subscription(StatesGroup):
+    deciding = State()

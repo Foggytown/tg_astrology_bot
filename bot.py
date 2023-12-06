@@ -7,7 +7,7 @@ from aiogram import Bot, Dispatcher
 from config_reader import config
 from schedule.scheduler import init_sch
 from db import storage
-from handlers import commands, texts, start_and_edit, main_menu
+from handlers import commands_deprecated, texts, start_and_edit, main_menu, subcription, debug_cmd
 
 
 # Запуск бота
@@ -16,7 +16,13 @@ async def main():
     logging.basicConfig(level=logging.INFO)
     scheduler = init_sch(bot)
     dp = Dispatcher()
-    dp.include_routers(main_menu.router, start_and_edit.router, commands.router, texts.router)
+    dp.include_routers(debug_cmd.router,
+                       main_menu.router,
+                       start_and_edit.router,
+                       subcription.router,
+                       commands.router,
+                       texts.router
+                       )
 
     try:
         scheduler.start()
