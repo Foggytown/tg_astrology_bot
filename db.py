@@ -1,5 +1,6 @@
 # global imports
 import redis.asyncio as redis
+from aiogram.fsm.storage.redis import RedisStorage
 
 # local imports
 from config_reader import config
@@ -19,3 +20,5 @@ storage = redis.Redis(
     password=config.db_password.get_secret_value(),
     decode_responses=True,
 )
+
+redis_storage = RedisStorage(storage)

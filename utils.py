@@ -44,7 +44,7 @@ main_menu_keyboard_builder.row(
 async def exit_to_main_menu(message: Message, state: FSMContext):
     await state.set_state(MainMenu.in_menu)
     await message.answer(
-        text='Приветствуем вас в гланом меню',
+        text='Приветствуем вас в главном меню',
         reply_markup=main_menu_keyboard_builder.as_markup(resize_keyboard=True)
     )
 

@@ -15,3 +15,9 @@ class GreetingAndEdit(StatesGroup):
 
 class Subscription(StatesGroup):
     deciding = State()
+
+
+class Compatibillity(StatesGroup):
+    choosing_first = State()
+    choosing_second = State()
+    finished = State()
