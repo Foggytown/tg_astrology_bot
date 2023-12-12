@@ -1,9 +1,12 @@
 # global imports
 import redis.asyncio as redis
 from aiogram.fsm.storage.redis import RedisStorage
+from dateutil import parser
 
 # local imports
 from config_reader import config
+from webparsing.horoscope import get_today_horoscope_by_zodiac_sign, get_today_horoscope_by_date
+
 '''
 in progress
 users_data is dict of kind
@@ -22,3 +25,14 @@ storage = redis.Redis(
 )
 
 redis_storage = RedisStorage(storage)
+
+
+async def get_horoscope_by_id(user_id: int):
+    user_id = 'id:' + str(user_id)
+    user_sign = await storage.hget(user_id, key='sign')
+    if user_sign is not None:
+        return await get_today_horoscope_by_zodiac_sign(user_sign.lower())
+    else:
+        user_date = await storage.hget(user_id, key='birth_date')
+        user_date = parser.parse(user_date)
+        return await get_today_horoscope_by_date(user_date.day, user_date.month)

@@ -5,10 +5,11 @@ from aiogram.fsm.context import FSMContext
 from aiogram import types
 
 # local imports
-from utils import zodiac_keyboard_builder, zodiac_list, exit_to_main_menu, zodiac_map
+from utils.util_data import zodiac_keyboard_builder, zodiac_list, zodiac_map
+from utils.util_funcs import exit_to_main_menu
 from handlers.filters import IsDeveloper
 from handlers.states import Compatibillity
-from webparsing.horoscope import get_compatibility_zodiac
+from webparsing.parse_compatibility import get_compatibility_zodiac
 
 router = Router()
 
@@ -47,7 +48,7 @@ async def choosen_both(message: types.Message, state: FSMContext) -> None:
     user_data = await state.get_data()
     first_sign = zodiac_map[user_data['first_sign']]
     second_sign = zodiac_map[message.text]
-    await message.answer(text='Ваша совместимость: '+get_compatibility_zodiac(first_sign,second_sign))
+    await message.answer(text='Ваша совместимость: ' + await get_compatibility_zodiac(first_sign, second_sign))
     await exit_to_main_menu(message, state)
 
 

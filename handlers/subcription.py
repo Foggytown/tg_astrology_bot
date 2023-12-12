@@ -6,7 +6,8 @@ from aiogram import types
 
 # local imports
 from db import storage
-from utils import exit_to_main_menu, make_row_keyboard, subscription_list
+from utils.util_data import subscription_list
+from utils.util_funcs import exit_to_main_menu, make_row_keyboard
 from handlers.states import Subscription
 from handlers.filters import IsDeveloper
 

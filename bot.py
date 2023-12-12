@@ -2,12 +2,11 @@
 import asyncio
 import logging
 from aiogram import Bot, Dispatcher
-from aiogram.fsm.storage.redis import RedisStorage
 
 # local imports
 from config_reader import config
 from schedule.scheduler import init_sch
-from db import storage, redis_storage
+from db import redis_storage
 from handlers import commands_deprecated, texts, start_and_edit, main_menu, subcription, debug_cmd, compatibility
 
 

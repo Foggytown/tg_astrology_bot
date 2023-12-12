@@ -20,7 +20,7 @@ async def cmd_clear(message: types.Message, state: FSMContext) -> None:
     )
 
 
-@router.message(Command("clear_data"))
+@router.message(IsDeveloper(), Command("clear_data"))
 async def cmd_delete(message: types.Message):
     user_id = 'id:' + str(message.from_user.id)
     await storage.delete(user_id)

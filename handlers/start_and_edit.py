@@ -8,7 +8,8 @@ from dateutil import parser
 
 # local imports
 from db import storage, basic_mapping
-from utils import make_row_keyboard, zodiac_list, zodiac_map, zodiac_keyboard_builder, exit_to_main_menu
+from utils.util_data import zodiac_list, zodiac_map, zodiac_keyboard_builder
+from utils.util_funcs import exit_to_main_menu, make_row_keyboard
 from handlers.states import GreetingAndEdit
 
 router = Router()
