@@ -13,6 +13,7 @@ from handlers.subcription import sub_menu
 from handlers.states import MainMenu
 from handlers.compatibility import compare_choose_first
 from db import get_horoscope_by_id
+from handlers.edit_post_time import start_editing
 
 router = Router()
 
@@ -37,6 +38,8 @@ async def command_in_main_menu(message: types.Message, state: FSMContext) -> Non
     elif message.text == main_menu_list[2]:
         await message.answer(await get_horoscope_by_id(message.from_user.id))
     elif message.text == main_menu_list[3]:
+        await start_editing(message, state)
+    elif message.text == main_menu_list[4]:
         await compare_choose_first(message, state)
     else:
         await message.answer(

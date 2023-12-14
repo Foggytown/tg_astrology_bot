@@ -41,7 +41,9 @@ async def sub_processing(message: types.Message, state: FSMContext):
 async def cmd_sub(message: types.Message):
     user_id = 'id:' + str(message.from_user.id)
     await storage.hset(user_id, mapping={'sub': 1})
-    await message.answer("Спасибо, вы подписались на ежедневную рассылку гороскопов.")
+    await message.answer("Спасибо, вы подписались на ежедневную рассылку гороскопов.\n"
+                         "Стандартное время рассылки 11:00 по Московскому времени,"
+                         " время можно настроить в главном меню.")
 
 
 async def cmd_unsub(message: types.Message):

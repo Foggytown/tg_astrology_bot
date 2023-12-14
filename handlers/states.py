@@ -17,7 +17,10 @@ class Subscription(StatesGroup):
     deciding = State()
 
 
-class Compatibillity(StatesGroup):
+class Compatibility(StatesGroup):
     choosing_first = State()
     choosing_second = State()
     finished = State()
+
+class EditPostTime(StatesGroup):
+    deciding = State()

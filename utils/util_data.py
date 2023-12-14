@@ -18,7 +18,8 @@ sign_to_number = {'Aries': 1, 'Taurus': 2, 'Gemini': 3,
                   'Capricorn': 10, 'Aquarius': 11, 'Pisces': 12}
 
 main_menu_list = ['Изменить дату рождения или знак зодиака', 'Подписка на рассылку', 'Получить гороскоп на сегодня',
-                  'Посмотреть совместимость между двумя знаками', 'Посмотреть натальную карту']
+                  'Изменить время получение гороскопа', 'Посмотреть совместимость между двумя знаками',
+                  'Посмотреть натальную карту']
 
 subscription_list = ["Подписаться", "Отписаться", "Вернуться в главное меню"]
 
@@ -35,11 +36,12 @@ main_menu_keyboard_builder.row(
     KeyboardButton(text=main_menu_list[1])
 )
 main_menu_keyboard_builder.row(
-    KeyboardButton(text=main_menu_list[2])
+    KeyboardButton(text=main_menu_list[2]),
+    KeyboardButton(text=main_menu_list[3])
 )
 main_menu_keyboard_builder.row(
-    KeyboardButton(text=main_menu_list[3]),
-    KeyboardButton(text=main_menu_list[4])
+    KeyboardButton(text=main_menu_list[4]),
+    KeyboardButton(text=main_menu_list[5])
 )
 
 

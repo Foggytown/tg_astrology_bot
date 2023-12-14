@@ -15,7 +15,7 @@ users_data is dict of kind
 
 '''
 
-basic_mapping = {'sub': 0, 'sign': 'unknown', 'birth_date': 'unknown'}
+basic_mapping = {'sub': 0, 'post_time': '11:00', 'sign': 'unknown', 'birth_date': 'unknown'}
 
 storage = redis.Redis(
     host='eu1-enjoyed-deer-40451.upstash.io',
