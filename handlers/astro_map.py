@@ -3,16 +3,16 @@ from aiogram import Router, F
 from aiogram.filters import Command
 from aiogram.fsm.context import FSMContext
 from aiogram import types
+from aiogram.types import ReplyKeyboardRemove
 import dateutil
 import datetime
-
-from aiogram.types import ReplyKeyboardRemove
 
 # local imports
 from utils.util_funcs import exit_to_main_menu, make_row_keyboard
 from handlers.filters import IsDeveloper
 from handlers.states import AstroMap
 from db import storage
+from webparsing.astro_map import get_natal_chart
 
 router = Router()
 
@@ -97,7 +97,26 @@ async def city_processing(message: types.Message, state: FSMContext):
 @router.message(IsDeveloper(), Command('get_astro_map'))
 async def get_astro_map(message: types.Message, state: FSMContext):
     user_data = await state.get_data()
+    user_id = "id:" + str(message.from_user.id)
+    birth_date = await storage.hget(user_id, key='birth_date')
+    birth_date = dateutil.parser.parse(birth_date)
+    birth_time = dateutil.parser.parse(user_data["time"]).time()
+    pic_links = await get_natal_chart(birth_date.year, birth_date.month, birth_date.day,
+                                      birth_time.hour, birth_time.minute, user_data["city"])
+    if pic_links == []:
+        await message.answer("Вы неправильно ввели данные, попробуйте еще раз, с самого начала")
+        await exit_to_main_menu(message, state)
+        return
 
-    await message.answer("Тут надо отправить саму натальную карту\n"
-                         f"{user_data['time']}, {user_data['city']}")
+    img1 = types.URLInputFile(pic_links[0])
+    await message.answer_photo(
+        img1,
+        caption="Ваша натальная карта"
+    )
+    img2 = types.URLInputFile(pic_links[1])
+    await message.answer_photo(
+        img2,
+        caption="Ваша натальная таблица"
+    )
+
     await exit_to_main_menu(message, state)
