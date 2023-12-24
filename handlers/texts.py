@@ -1,10 +1,13 @@
+# global imports
 from aiogram import Router, F
-from aiogram.filters import Command
 from aiogram import types
-from aiogram.filters import CommandObject
+
+# !!!!!!!!!!!! DEPRECATED and turned off
 
 router = Router()
 
+
 @router.message(F.text)
-async def echo_msg(message : types.Message):
-    await message.answer(message.text+'\nYou said THAT????')
+async def echo_msg(message: types.Message):
+    # await bot(SendMessage(chat_id=, text='anime'))
+    await message.answer('anime ')
