@@ -9,8 +9,9 @@ from db import storage, basic_mapping
 
 router = Router()
 
-# DEPRECATED
+# !!!!!!!!!!!!!!!! DEPRECATED
 # only for testing purposes
+# now just turned off, just legacy code
 
 
 @router.message(Command("start"))

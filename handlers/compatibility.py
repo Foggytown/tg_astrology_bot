@@ -15,7 +15,7 @@ router = Router()
 
 
 @router.message(IsDeveloper(), Command('compare'))
-async def compare_choose_first(message: types.Message, state: FSMContext):
+async def compare_choose_first(message: types.Message, state: FSMContext) -> None:
     await state.set_state(Compatibility.choosing_first)
     await message.answer("Введите знак женщины🚺",
                          reply_markup=zodiac_keyboard_builder.as_markup(resize_keyboard=True))
@@ -26,7 +26,7 @@ async def compare_choose_first(message: types.Message, state: FSMContext):
     F.text.in_(zodiac_list)
 )
 async def compare_choose_second(message: types.Message, state: FSMContext) -> None:
-    await state.set_data({'first_sign': message.text})
+    await state.update_data({'first_sign': message.text})
     await state.set_state(Compatibility.choosing_second)
     await message.answer("Введите знак мужчины🚹",
                          reply_markup=zodiac_keyboard_builder.as_markup(resize_keyboard=True))

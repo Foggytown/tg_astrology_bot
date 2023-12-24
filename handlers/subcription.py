@@ -1,5 +1,5 @@
 # global imports
-from aiogram import Router,F
+from aiogram import Router, F
 from aiogram.filters import Command
 from aiogram.fsm.context import FSMContext
 from aiogram import types
@@ -23,7 +23,8 @@ async def sub_menu(message: types.Message, state: FSMContext):
         await message.answer("Какая-то ошибка, сначала измените данные через меню.")
         await exit_to_main_menu(message, state)
         return
-    await message.answer(text='Выберите', reply_markup=make_row_keyboard([subscription_list[int(user_subbed)], subscription_list[2]]))
+    await message.answer(text='Выберите',
+                         reply_markup=make_row_keyboard([subscription_list[int(user_subbed)], subscription_list[2]]))
 
 
 @router.message(

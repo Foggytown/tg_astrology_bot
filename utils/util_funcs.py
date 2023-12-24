@@ -12,7 +12,7 @@ def make_row_keyboard(items: list[str]) -> ReplyKeyboardMarkup:
     return ReplyKeyboardMarkup(keyboard=[row], resize_keyboard=True)
 
 
-async def exit_to_main_menu(message: Message, state: FSMContext):
+async def exit_to_main_menu(message: Message, state: FSMContext) -> None:
     await state.set_state(MainMenu.in_menu)
     await message.answer(
         text='Приветствуем вас в главном меню',
@@ -20,7 +20,7 @@ async def exit_to_main_menu(message: Message, state: FSMContext):
     )
 
 
-def get_zodiac_sign_by_date(day, month):
+def get_zodiac_sign_by_date(day, month) -> str:
     if month == 12:
         astro_sign = 'sagittarius' if (day < 22) else 'capricorn'
 

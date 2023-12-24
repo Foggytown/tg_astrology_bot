@@ -3,17 +3,13 @@ from aiogram import Router, F
 from aiogram.filters import Command
 from aiogram.fsm.context import FSMContext
 from aiogram import types
-from dateutil import parser
 
 # local imports
 from utils.util_data import main_menu_keyboard_builder, main_menu_list
-from handlers.filters import IsDeveloper
-from handlers.start_and_edit import edit_menu
-from handlers.subcription import sub_menu
-from handlers.states import MainMenu
-from handlers.compatibility import compare_choose_first
 from db import get_horoscope_by_id
-from handlers.edit_post_time import start_editing
+from handlers.states import MainMenu
+from handlers.filters import IsDeveloper
+from handlers import start_and_edit, subcription, compatibility, edit_post_time, astro_map
 
 router = Router()
 
@@ -32,16 +28,23 @@ async def exit_to_menu(message: types.Message, state: FSMContext) -> None:
                 )
 async def command_in_main_menu(message: types.Message, state: FSMContext) -> None:
     if message.text == main_menu_list[0]:
-        await edit_menu(message, state)
+        await start_and_edit.edit_menu(message, state)
     elif message.text == main_menu_list[1]:
-        await sub_menu(message, state)
+        await subcription.sub_menu(message, state)
     elif message.text == main_menu_list[2]:
         await message.answer(await get_horoscope_by_id(message.from_user.id))
     elif message.text == main_menu_list[3]:
-        await start_editing(message, state)
+        await edit_post_time.start_editing(message, state)
     elif message.text == main_menu_list[4]:
-        await compare_choose_first(message, state)
+        await compatibility.compare_choose_first(message, state)
+    elif message.text == main_menu_list[5]:
+        await astro_map.prepare_choosing(message, state)
     else:
         await message.answer(
-            text="Извините эта возможность еще не сделана"
+            text="Извините но как вы сюда попали"
         )
+
+
+@router.message(MainMenu.in_menu)
+async def command_in_main_menu(message: types.Message, state: FSMContext) -> None:
+    await message.answer("Такого варианта нету, нажмите на кнопку ниже")

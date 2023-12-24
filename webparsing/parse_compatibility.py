@@ -6,15 +6,15 @@ import aiohttp
 from utils.util_data import sign_to_number
 
 
-def get_compatibility_url(signs_num):
+def get_compatibility_url(signs_num: int) -> str:
     url = 'https://horo.mail.ru/compatibility/zodiac/'
     url += str(signs_num)
     url += '/'
     return url
 
 
-async def get_compatibility_zodiac(woman, man):
-    signs_num = (sign_to_number[woman] - 1) * 12 + sign_to_number[man]
+async def get_compatibility_zodiac(woman_sign: int, man_sign: int) -> str:
+    signs_num = (sign_to_number[woman_sign] - 1) * 12 + sign_to_number[man_sign]
     url = get_compatibility_url(signs_num)
 
     async with aiohttp.ClientSession() as session:

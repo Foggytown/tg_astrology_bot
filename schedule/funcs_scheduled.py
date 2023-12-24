@@ -10,7 +10,7 @@ from db import storage, get_horoscope_by_id
 threshold = timedelta(seconds=120)
 
 
-async def check_time(bot: Bot):
+async def check_time(bot: Bot) -> None:
     async for key in storage.scan_iter("id:*"):
         tg_id = key[3:]
         print(tg_id, 'msg sch')
@@ -20,7 +20,8 @@ async def check_time(bot: Bot):
                 await bot(SendMessage(chat_id=tg_id, text=await get_horoscope_by_id(tg_id)))
 
 
-async def send_message_time(bot: Bot):
+# not used, legacy
+async def send_message_time(bot: Bot) -> None:
     async for key in storage.scan_iter("id:*"):
         tg_id = key[3:]
         print(tg_id, 'msg sch')
@@ -28,5 +29,6 @@ async def send_message_time(bot: Bot):
             await bot(SendMessage(chat_id=tg_id, text=await get_horoscope_by_id(tg_id)))
 
 
-async def send_message_time2(bot: Bot):
+# not used, legacy
+async def send_message_time2(bot: Bot) -> None:
     await bot(SendMessage(chat_id=302130806, text='anime2'))

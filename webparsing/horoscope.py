@@ -6,21 +6,21 @@ import aiohttp
 from utils.util_funcs import get_zodiac_sign_by_date
 
 
-def get_url_for_tomorrow_horoscope(zodiac_sign):
+def get_url_for_tomorrow_horoscope(zodiac_sign: str) -> str:
     url = 'https://horo.mail.ru/prediction/'
     url += zodiac_sign
     url += '/tomorrow/'
     return url
 
 
-def get_url_for_today_horoscope(zodiac_sign):
+def get_url_for_today_horoscope(zodiac_sign: str) -> str:
     url = 'https://horo.mail.ru/prediction/'
     url += zodiac_sign
     url += '/today/'
     return url
 
 
-async def get_today_horoscope_by_zodiac_sign(zodiac_sign):
+async def get_today_horoscope_by_zodiac_sign(zodiac_sign: str) -> str:
     url = get_url_for_today_horoscope(zodiac_sign)
     async with aiohttp.ClientSession() as session:
         r = await session.get(url)
@@ -31,6 +31,6 @@ async def get_today_horoscope_by_zodiac_sign(zodiac_sign):
     return tags[0].text
 
 
-async def get_today_horoscope_by_date(day, month):
+async def get_today_horoscope_by_date(day: int, month: int) -> str:
     zodiac_sign = get_zodiac_sign_by_date(day, month)
     return await get_today_horoscope_by_zodiac_sign(zodiac_sign)

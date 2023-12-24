@@ -8,7 +8,7 @@ from config_reader import config
 from schedule.scheduler import init_sch
 from db import redis_storage
 from handlers import (commands_deprecated, texts, start_and_edit, main_menu, subcription,
-                      debug_cmd, compatibility, edit_post_time)
+                      debug_cmd, compatibility, edit_post_time, astro_map)
 
 
 # Запуск бота
@@ -23,8 +23,9 @@ async def main():
                        subcription.router,
                        edit_post_time.router,
                        compatibility.router,
-                       commands_deprecated.router,
-                       texts.router
+                       astro_map.router,
+                       # commands_deprecated.router,
+                       # texts.router
                        )
 
     try:

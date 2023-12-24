@@ -22,5 +22,12 @@ class Compatibility(StatesGroup):
     choosing_second = State()
     finished = State()
 
+
 class EditPostTime(StatesGroup):
     deciding = State()
+
+
+class AstroMap(StatesGroup):
+    choosing_data = State()
+    choosing_time = State()
+    choosing_city = State()

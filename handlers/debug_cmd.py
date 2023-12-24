@@ -21,6 +21,13 @@ async def cmd_clear(message: types.Message, state: FSMContext) -> None:
 
 
 @router.message(IsDeveloper(), Command("clear_data"))
-async def cmd_delete(message: types.Message):
+async def cmd_delete(message: types.Message, state: FSMContext) -> None:
     user_id = 'id:' + str(message.from_user.id)
+    data = await state.get_data()
+    await message.answer("All data cleared\n"
+                         f"FSM data was:\n{data}\n"
+                         f"DB data was:\n{await storage.hgetall(user_id)}\n"
+                         f"State was {await state.get_state()}")
+    await state.set_data({})
     await storage.delete(user_id)
+    await state.set_state(None)

@@ -81,7 +81,7 @@ async def date_received(message: types.Message, state: FSMContext) -> None:
 
         await exit_to_main_menu(message, state)
 
-    except parser._parser.ParserError as error:
+    except parser._parser.ParserError:
         await message.answer('Вы неправильно указали дату своего рождения, укажите ее в формате:\n21.03.2021')
 
 
