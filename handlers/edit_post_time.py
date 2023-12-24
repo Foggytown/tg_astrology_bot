@@ -21,11 +21,11 @@ async def start_editing(message: types.Message, state: FSMContext) -> None:
     user_id = 'id:' + str(message.from_user.id)
     user_subbed = await storage.hget(user_id, 'sub')
     if user_subbed is None:
-        await message.answer("Какая-то ошибка, сначала измените данные через меню.")
+        await message.answer("Какая-то ошибка, сначала измените данные через меню")
         await exit_to_main_menu(message, state)
         return
     if not int(user_subbed):
-        await message.answer("Вы не подписаны")
+        await message.answer("Вы не подписаны на рассылку")
         await exit_to_main_menu(message, state)
         return
     else:
